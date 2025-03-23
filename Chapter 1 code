@@ -1,0 +1,99 @@
+Extracted Code and Scripts from Chapter 1
+________________________________________
+Checking the Linux Kernel Version
+uname -r
+Explanation: Displays the current Linux kernel version.
+Example Output:
+5.14.0-427.37.1.el9.x86_64
+________________________________________
+Displaying System Information
+uname -a
+Explanation: Provides detailed system information including kernel version, architecture, and OS.
+Example Output:
+Linux RockyLinux 5.14.0-427.37.1.el9.x86_64 #1 SMP PREEMPT_DYNAMIC Wed Sep 25 UTC 2024 x86_64 GNU/Linux
+________________________________________
+Using the man Command to Access Documentation
+man uname
+Explanation: Opens the manual entry for the uname command.
+Navigation:
+•	Press q to exit the manual page.
+________________________________________
+Checking System Uptime
+uptime
+Example Output:
+12:10:42 up 5 days, 3:45, 3 users, load average: 0.02, 0.03, 0.00
+________________________________________
+Verifying the Integrity of a Downloaded Rocky Linux ISO
+sha256sum <filename>.iso
+Explanation: Compares the checksum of the ISO file to ensure data integrity.
+________________________________________
+Managing System Services with systemctl
+Checking the Status of a Service
+systemctl status firewalld
+Starting a Service
+sudo systemctl start firewalld
+Stopping a Service
+sudo systemctl stop firewalld
+Enabling a Service to Start on Boot
+sudo systemctl enable firewalld
+Disabling a Service from Starting on Boot
+sudo systemctl disable firewalld
+________________________________________
+Managing Firewall Rules with firewalld
+Listing Active Zones
+firewall-cmd --get-active-zones
+Adding a Service to the Firewall
+sudo firewall-cmd --permanent --add-service=http
+sudo firewall-cmd --reload
+Removing a Service from the Firewall
+sudo firewall-cmd --permanent --remove-service=http
+sudo firewall-cmd --reload
+________________________________________
+Checking Available Repositories
+dnf repolist
+Explanation: Lists available package repositories configured in Rocky Linux.
+________________________________________
+Installing a Package
+sudo dnf install <package-name>
+Example: Installing vim text editor
+sudo dnf install vim
+________________________________________
+Checking Available Disk Space
+df -h
+Explanation: Displays the disk space usage in a human-readable format.
+________________________________________
+Displaying Logical Volume Information
+lvdisplay
+Explanation: Shows detailed information about logical volumes.
+________________________________________
+Creating a New User
+sudo useradd -m <username>
+Example: Creating a user named john
+sudo useradd -m john
+________________________________________
+Setting a Password for a User
+sudo passwd <username>
+Example: Setting a password for john
+sudo passwd john
+________________________________________
+Adding a User to a Group
+sudo usermod -aG <groupname> <username>
+Example: Adding john to the wheel group
+sudo usermod -aG wheel john
+________________________________________
+Checking Running Processes
+top
+Explanation: Displays real-time information about system processes and resource usage.
+________________________________________
+Finding a Specific Process
+ps aux | grep <process-name>
+Example: Finding all running httpd processes
+ps aux | grep httpd
+________________________________________
+Killing a Process by PID
+sudo kill <PID>
+Example: Killing process with PID 1234
+sudo kill 1234
+________________________________________
+This document contains all essential code and scripts from Chapter 1, structured for easy reference and use in Rocky Linux environments.
+
