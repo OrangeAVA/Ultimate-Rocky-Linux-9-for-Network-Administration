@@ -1,0 +1,84 @@
+Code for Chapter 2
+Introduction
+This chapter provides essential scripts and configurations relevant to managing files, directories, and cloud-based storage in a Rocky Linux environment. The provided scripts automate common administrative tasks, ensuring efficiency and accuracy.
+1. Creating and Managing Files and Directories
+Script: create_files.sh
+#!/bin/bash
+# Check if the directory already exists, if not, create it
+if [ ! -d "directory_name" ]; then
+    mkdir directory_name
+    chmod 755 directory_name
+    echo "Directory 'directory_name' created with permissions drwxr-xr-x"
+else
+    echo "Directory 'directory_name' already exists."
+fi
+
+# Create a regular file and set permissions
+touch file_name.txt
+chmod 644 file_name.txt
+truncate -s 1024 file_name.txt
+echo "File 'file_name.txt' created with permissions -rw-r--r-- and size 1024 bytes."
+
+# Create a symbolic link if the target file exists
+if [ -e "/path/to/file" ]; then
+    ln -s /path/to/file link_name
+    echo "Symbolic link 'link_name' created pointing to '/path/to/file'."
+else
+    echo "Warning: '/path/to/file' does not exist. Symbolic link 'link_name' will be broken."
+fi
+
+# Verify and show the results
+echo "Files created with the following permissions:"
+ls -l directory_name file_name.txt link_name
+
+Explanation:
+- Checks if a directory exists and creates it with `drwxr-xr-x` permissions if necessary.
+- Creates a text file with appropriate read/write permissions (`-rw-r--r--`).
+- Ensures a specific file size using the `truncate` command.
+- Creates a symbolic link only if the target file exists.
+- Lists created files and their permissions for verification.
+2. Uploading Files to an S3 Bucket
+Script: upload_to_s3.sh
+#!/bin/bash
+# Define bucket name (fixed as "bobby-fisher")
+BUCKET_NAME="bobby-fisher"
+
+# Check if the file name is provided
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <file-name>"
+    exit 1
+fi
+
+# Assign the file name from the argument
+FILE_NAME=$1
+
+# Check if the file exists
+if [ ! -f "$FILE_NAME" ]; then
+    echo "Error: File '$FILE_NAME' does not exist."
+    exit 1
+fi
+
+# Create the S3 bucket (fixed bucket name)
+echo "Creating S3 bucket: $BUCKET_NAME..."
+aws s3 mb s3://$BUCKET_NAME
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to create S3 bucket."
+    exit 1
+fi
+
+# Upload the file to the S3 bucket
+echo "Uploading file: $FILE_NAME to bucket: $BUCKET_NAME..."
+aws s3 cp "$FILE_NAME" s3://$BUCKET_NAME
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to upload the file."
+    exit 1
+fi
+
+Explanation:
+- Defines a fixed S3 bucket name (`bobby-fisher`).
+- Verifies that an argument (file name) is provided.
+- Ensures the file exists before attempting to upload it.
+- Creates the specified S3 bucket.
+- Uploads the file to the bucket and checks for errors.
+Summary
+The scripts presented in this chapter provide automation for file handling and cloud storage operations. These scripts help streamline Linux system administration, ensuring consistency in managing directories, files, and cloud-based storage solutions.
